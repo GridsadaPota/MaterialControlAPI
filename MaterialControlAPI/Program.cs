@@ -13,6 +13,8 @@ builder.Services.AddSwaggerGen();
 // Add Service
 builder.Services.AddSingleton<IMatTypeService, MatTypeService>();
 
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

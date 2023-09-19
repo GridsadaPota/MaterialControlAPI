@@ -8,6 +8,7 @@ namespace MaterialControlAPI.Interface
         bool AddMatType(MatTypeModel matTypeModel);
         MatTypeModel GetMatTypeByCode(string code);
         bool EditMatType(MatTypeModel matTypeModel);
+        bool DeleteMatType(string code);
 
     }
 }

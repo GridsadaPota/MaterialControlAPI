@@ -75,6 +75,21 @@ namespace MaterialControlAPI.Controllers
                 return Json(new { Status = 401, Message = "Can Not Update" });
             }
         }
+
+
+        [HttpDelete("Delete")]
+        public JsonResult DeleteMatType(string code)
+        {
+            var response = _mattypeService.DeleteMatType(code);
+            if (response == true)
+            {
+                return Json(new { Status = 204, Message = "Delete Succest" });
+            }
+            else
+            {
+                return Json(new { Status = 401, Message = "Can Not Delete" });
+            }
+        }
     }
 
 }
