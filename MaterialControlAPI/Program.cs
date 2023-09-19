@@ -12,6 +12,7 @@ builder.Services.AddSwaggerGen();
 
 // Add Service
 builder.Services.AddSingleton<IMatTypeService, MatTypeService>();
+builder.Services.AddSingleton<IMatLocalService, MatLocalService>();
 
 
 

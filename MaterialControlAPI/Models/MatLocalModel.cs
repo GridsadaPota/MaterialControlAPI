@@ -8,7 +8,7 @@ namespace MaterialControlAPI.Models
         public int Local_Id { get; set; }
         public string Local_Code { get; set;}
         public string Local_Name { get; set;}
-        public string Local_Remak { get; set;}
+        public string Local_Remark { get; set;}
         public DateTime Create_Date { get; set; }
         public DateTime Modify_Date { get; set; }
     }

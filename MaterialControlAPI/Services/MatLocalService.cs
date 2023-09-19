@@ -1,28 +1,24 @@
 ﻿using MaterialControlAPI.Interface;
 using MaterialControlAPI.Models;
 using Microsoft.Data.SqlClient;
-using System.Collections.Generic;
-using System;
 using System.Data;
 
 namespace MaterialControlAPI.Services
 {
-    public class MatTypeService : IMatTypeService
+    public class MatLocalService : IMatLocalService
     {
         private readonly string _connectionString;
-        public MatTypeService(IConfiguration configuration)
+        public MatLocalService(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("ConnectDB");
         }
-        public bool AddMatType(MatTypeModel matTypeModel)
+        public bool AddMatLocal(MatLocalModel matLocalModel)
         {
             try
             {
-
-                //string connectionstring = "Data Source=MSI\\SQLEXPRESS2019; Initial Catalog=Demo; User ID=sa; Password=1234; TrustServerCertificate=True";
                 SqlConnection conn = new SqlConnection(_connectionString);
-                string sql = "insert into Material_Type(Type_Code, Type_Name, Type_Remark, Create_Date) ";
-                sql += "values('" + matTypeModel.Type_Code + "', '" + matTypeModel.Type_Name + "', '" + matTypeModel.Type_Remark + "', getdate()) ";
+                string sql = "insert into Mat_Location (Local_Code, Local_Name, Local_Remark, Create_Date) ";
+                sql += "values ('"+matLocalModel.Local_Code+"', '"+matLocalModel.Local_Name+"', '"+matLocalModel.Local_Remark+"', GETDATE())";
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.CommandType = CommandType.Text;
@@ -37,36 +33,12 @@ namespace MaterialControlAPI.Services
             }
         }
 
-        public bool DeleteMatType(string code)
-        {
-            try 
-            { 
-                //string connectionstring = "Data Source=MSI\\SQLEXPRESS2019; Initial Catalog=Demo; User ID=sa; Password=1234; TrustServerCertificate=True";
-                SqlConnection conn = new SqlConnection(_connectionString);
-                string sql = "delete from Material_Type where Type_Code = '"+code+"' ";
-                conn.Open();
-                SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.CommandType = CommandType.Text;
-                cmd.ExecuteNonQuery();
-                conn.Close();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
-
-        }
-
-        public bool EditMatType(MatTypeModel matTypeModel)
+        public bool DeleteMatLocal(string code)
         {
             try
             {
-                //string connectionstring = "Data Source=MSI\\SQLEXPRESS2019; Initial Catalog=Demo; User ID=sa; Password=1234; TrustServerCertificate=True";
                 SqlConnection conn = new SqlConnection(_connectionString);
-                string sql = "update Material_Type set Type_Name = '" + matTypeModel.Type_Name + "' ";
-                sql += ", Type_Remark = '"+matTypeModel.Type_Remark+"', Modify_Date = GETDATE() where Type_Id = "+matTypeModel.Type_Id+" ";
-
+                string sql = "delete from Mat_Location where Local_Code = '" + code + "' ";
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.CommandType = CommandType.Text;
@@ -80,14 +52,37 @@ namespace MaterialControlAPI.Services
             }
         }
 
-        public IEnumerable<MatTypeModel> GetAll()
+        public bool EditMatLocal(MatLocalModel matLocalModel)
         {
             try
             {
-                List<MatTypeModel> list = new List<MatTypeModel>();
                 //string connectionstring = "Data Source=MSI\\SQLEXPRESS2019; Initial Catalog=Demo; User ID=sa; Password=1234; TrustServerCertificate=True";
                 SqlConnection conn = new SqlConnection(_connectionString);
-                string sql = "select Type_Id, Type_Code, Type_Name, Type_Remark, Create_Date, Modify_Date from Material_Type";
+                string sql = "update Mat_Location set Local_Name = '" + matLocalModel.Local_Name + "' ";
+                sql += ", Local_Code = '"+ matLocalModel.Local_Code+"' ";
+                sql += ", Local_Remark = '" + matLocalModel.Local_Remark + "', Modify_Date = GETDATE() where Local_Id = " + matLocalModel.Local_Id + " ";
+
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.CommandType = CommandType.Text;
+                cmd.ExecuteNonQuery();
+                conn.Close();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public IEnumerable<MatLocalModel> GetAll()
+        {
+            try
+            {
+                List<MatLocalModel> list = new List<MatLocalModel>();
+                //string connectionstring = "Data Source=MSI\\SQLEXPRESS2019; Initial Catalog=Demo; User ID=sa; Password=1234; TrustServerCertificate=True";
+                SqlConnection conn = new SqlConnection(_connectionString);
+                string sql = "select Local_Id, Local_Code, Local_Name, Local_Remark, Create_Date, Modify_Date from Mat_Location order by Local_Id";
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);
@@ -98,12 +93,12 @@ namespace MaterialControlAPI.Services
                 dt = ds.Tables[0];
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
-                    MatTypeModel model = new MatTypeModel()
+                    MatLocalModel model = new MatLocalModel()
                     {
-                        Type_Id = Convert.ToInt32(dt.Rows[i]["Type_Id"].ToString()),
-                        Type_Code = dt.Rows[i]["Type_Code"].ToString(),
-                        Type_Name = dt.Rows[i]["Type_Name"].ToString(),
-                        Type_Remark = dt.Rows[i]["Type_Remark"].ToString(),
+                        Local_Id = Convert.ToInt32(dt.Rows[i]["Local_Id"].ToString()),
+                        Local_Code = dt.Rows[i]["Local_Code"].ToString(),
+                        Local_Name = dt.Rows[i]["Local_Name"].ToString(),
+                        Local_Remark = dt.Rows[i]["Local_Remark"].ToString(),
                         Create_Date = Convert.ToDateTime(dt.Rows[i]["Create_Date"].ToString()),
                         Modify_Date = string.IsNullOrEmpty(dt.Rows[i]["Modify_Date"].ToString()) ? DateTime.MinValue : Convert.ToDateTime(dt.Rows[i]["Modify_Date"].ToString())
 
@@ -123,13 +118,13 @@ namespace MaterialControlAPI.Services
             }
         }
 
-        public MatTypeModel GetMatTypeByCode(string code)
+        public MatLocalModel GetMatLocalByCode(string code)
         {
             try
             {
                 //string connectionstring = "Data Source=MSI\\SQLEXPRESS2019; Initial Catalog=Demo; User ID=sa; Password=1234; TrustServerCertificate=True";
                 SqlConnection conn = new SqlConnection(_connectionString);
-                string sql = "select Top 1 Type_Id, Type_Code, Type_Name, Type_Remark, Create_Date, Modify_Date from Material_Type where Type_Code = '"+code+"' ";
+                string sql = "select Top 1 Local_Id, Local_Code, Local_Name, Local_Remark, Create_Date, Modify_Date from Mat_Location where Local_Code = '" + code + "' ";
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);
@@ -140,16 +135,16 @@ namespace MaterialControlAPI.Services
                 dt = ds.Tables[0];
 
                 //Add Data to Member model
-                MatTypeModel model = null;
+                MatLocalModel model = null;
                 if (dt.Rows.Count > 0)
                 {
-                    model = new MatTypeModel()
+                    model = new MatLocalModel()
                     {
-                        Type_Id = Convert.ToInt32(dt.Rows[0]["Type_Id"].ToString()),
-                        Type_Code = dt.Rows[0]["Type_Code"].ToString(),
-                        Type_Name = dt.Rows[0]["Type_Name"].ToString(),
-                        Type_Remark =dt.Rows[0]["Type_Remark"].ToString(),
-                        Create_Date =Convert.ToDateTime(dt.Rows[0]["Create_Date"].ToString()),
+                        Local_Id = Convert.ToInt32(dt.Rows[0]["Local_Id"].ToString()),
+                        Local_Code = dt.Rows[0]["Local_Code"].ToString(),
+                        Local_Name = dt.Rows[0]["Local_Name"].ToString(),
+                        Local_Remark = dt.Rows[0]["Local_Remark"].ToString(),
+                        Create_Date = Convert.ToDateTime(dt.Rows[0]["Create_Date"].ToString()),
                         Modify_Date = string.IsNullOrEmpty(dt.Rows[0]["Modify_Date"].ToString()) ? DateTime.MinValue : Convert.ToDateTime(dt.Rows[0]["Modify_Date"].ToString())
 
                     };

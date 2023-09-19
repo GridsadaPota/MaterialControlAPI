@@ -10,5 +10,10 @@ namespace MaterialControlAPI.Models
         public string Type_Remark { get; set;}
         public DateTime Create_Date { get; set; }
         public DateTime Modify_Date { get; set;}
+
+        public static implicit operator MatTypeModel(MatLocalModel v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
