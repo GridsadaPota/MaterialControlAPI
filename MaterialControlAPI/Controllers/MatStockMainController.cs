@@ -53,5 +53,18 @@ namespace MaterialControlAPI.Controllers
                 return Json(response);
             }
         }
+
+        public JsonResult DeleteMatStockMain(string code)
+        {
+            var response = _matStockMainService.DeleteMatStockMain(code);
+            if (response == true)
+            {
+                return Json(new { Status = 204, Message = "Delete Succest" });
+            }
+            else
+            {
+                return Json(new { Status = 401, Message = "Can Not Delete" });
+            }
+        }
     }
 }

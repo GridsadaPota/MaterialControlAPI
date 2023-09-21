@@ -37,7 +37,21 @@ namespace MaterialControlAPI.Services
 
         public bool DeleteMatStockMain(string code)
         {
-            throw new NotImplementedException();
+            try
+            {
+                SqlConnection conn = new SqlConnection(_connectionString);
+                string sql = "delete from Mat_StockMain where Material_Code = '" + code + "' ";
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.CommandType = CommandType.Text;
+                cmd.ExecuteNonQuery();
+                conn.Close();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
 
         public bool EditMatStockMain(MatStockMainModel matStockMainModel)
