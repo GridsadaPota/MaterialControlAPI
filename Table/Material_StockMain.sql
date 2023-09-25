@@ -1,7 +1,7 @@
 USE [Demo]
 GO
 
-/****** Object:  Table [dbo].[Material_StockMain]    Script Date: 19/9/2566 19:05:36 ******/
+/****** Object:  Table [dbo].[Material_StockMain]    Script Date: 25/9/2566 20:38:40 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -16,7 +16,7 @@ CREATE TABLE [dbo].[Material_StockMain](
 	[Type_Id] [int] NOT NULL,
 	[Shelf_Id] [int] NOT NULL,
 	[Stock_Qty] [decimal](10, 2) NULL,
-	[Hold_Stock] [bit] NULL,
+	[Hold_Stock] [int] NULL,
 	[Remark] [nvarchar](50) NULL,
 	[Create_Date] [datetime] NULL,
 	[Modify_Date] [datetime] NULL,

@@ -1,7 +1,7 @@
 USE [Demo]
 GO
 
-/****** Object:  Table [dbo].[Mat_Location]    Script Date: 19/9/2566 19:04:45 ******/
+/****** Object:  Table [dbo].[Mat_Location]    Script Date: 25/9/2566 20:37:31 ******/
 SET ANSI_NULLS ON
 GO
 
