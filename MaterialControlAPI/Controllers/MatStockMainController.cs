@@ -54,6 +54,8 @@ namespace MaterialControlAPI.Controllers
             }
         }
 
+
+        [HttpDelete("DeleteMatStockMain")]
         public JsonResult DeleteMatStockMain(string code)
         {
             var response = _matStockMainService.DeleteMatStockMain(code);

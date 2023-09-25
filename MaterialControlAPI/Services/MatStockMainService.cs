@@ -40,7 +40,7 @@ namespace MaterialControlAPI.Services
             try
             {
                 SqlConnection conn = new SqlConnection(_connectionString);
-                string sql = "delete from Mat_StockMain where Material_Code = '" + code + "' ";
+                string sql = "delete from Material_StockMain where Material_Code = '" + code + "' ";
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.CommandType = CommandType.Text;
@@ -106,7 +106,7 @@ namespace MaterialControlAPI.Services
             try
             {
                 SqlConnection conn = new SqlConnection(_connectionString);
-                string sql = "select Material_Id, Material_Code, Material_Name, Unit, Type_Id, Shelf_Id, Stock_Qty, Hold_Stock, Remark, Create_Date, Modify_Date from Material_StockMain order by Material_Id"+ code + "'";
+                string sql = "select Material_Id, Material_Code, Material_Name, Unit, Type_Id, Shelf_Id, Stock_Qty, Hold_Stock, Remark, Create_Date, Modify_Date from Material_StockMain where Material_code = '"+code+"' ";
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);
