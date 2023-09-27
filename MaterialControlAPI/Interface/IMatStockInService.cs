@@ -6,8 +6,8 @@ namespace MaterialControlAPI.Interface
     {
         IEnumerable<MatStockInModel> GetAll();
         bool AddMatStockIn(MatStockInModel matStockInModel);
-        MatStockInModel GetMatStockInByCode(string code);
+        MatStockInModel GetMatStockInById(int Id);
         bool EditMatStockIn(MatStockInModel matStockInModel);
-        bool DeleteMatStockIn(string code);
+        bool DeleteMatStockIn(int id);
     }
 }

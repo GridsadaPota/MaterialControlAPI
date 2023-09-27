@@ -56,7 +56,25 @@ namespace MaterialControlAPI.Services
 
         public bool EditMatStockMain(MatStockMainModel matStockMainModel)
         {
-            throw new NotImplementedException();
+            try
+            {
+                SqlConnection conn = new SqlConnection(_connectionString);
+                string sql = "update Material_StockMain set Material_Code = '" + matStockMainModel.Material_Code + "' ";
+                sql += ", Material_Name = '" + matStockMainModel.Material_Name + "', Type_Id ='"+matStockMainModel.Type_Id+"'";
+                sql += "Shelf_Id ='" + matStockMainModel.Shelf_Id + "', Stock_Qty = '" + matStockMainModel.Stock_Qty + "', Hold_Stock = '" + matStockMainModel.Hold_Stock + "'";
+                sql += "Modify_Date = '"+matStockMainModel.Modify_Date+"'where Type_Id = " + matStockMainModel.Material_Id + " ";
+
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.CommandType = CommandType.Text;
+                cmd.ExecuteNonQuery();
+                conn.Close();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
 
         public IEnumerable<MatStockMainModel> GetAll()

@@ -55,6 +55,22 @@ namespace MaterialControlAPI.Controllers
         }
 
 
+
+        [HttpPut("Edit")]
+        public JsonResult EditMatStockMain(MatStockMainModel matStockMainModel)
+        {
+            var response = _matStockMainService.EditMatStockMain(matStockMainModel);
+            if (response == true)
+            {
+                return Json(new { Status = 202, Message = "Update Succest" });
+            }
+            else
+            {
+                return Json(new { Status = 401, Message = "Can Not Update" });
+            }
+        }
+
+
         [HttpDelete("DeleteMatStockMain")]
         public JsonResult DeleteMatStockMain(string code)
         {
@@ -67,6 +83,6 @@ namespace MaterialControlAPI.Controllers
             {
                 return Json(new { Status = 401, Message = "Can Not Delete" });
             }
-        }
+        }       
     }
 }
