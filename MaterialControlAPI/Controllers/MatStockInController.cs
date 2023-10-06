@@ -11,18 +11,22 @@ namespace MaterialControlAPI.Controllers
     public class MatStockInController : Controller
     {
         private readonly IMatStockInService _matStockInService;
-        public MatStockInController(IMatStockInService matStockInService)
+        private readonly IMatStockMainService _matStockMainService;
+        public MatStockInController(IMatStockInService matStockInService, IMatStockMainService matStockMainService)
         {
             _matStockInService = matStockInService;
+            _matStockMainService = matStockMainService;
         }
 
 
         [HttpPost("Add")]
         public JsonResult Add(MatStockInModel matStockIn)
         {
+
             var response = _matStockInService.AddMatStockIn(matStockIn);
             if (response == true)
             {
+                _matStockMainService.UpdateStockMainQty(matStockIn.Material_Id, matStockIn.StockIn_Qty);
                 return Json(new { Status = 201, Message = "Add Succest" });
             }
             else

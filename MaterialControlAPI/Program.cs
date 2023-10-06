@@ -16,6 +16,8 @@ builder.Services.AddSingleton<IMatLocalService, MatLocalService>();
 builder.Services.AddSingleton<IMatShelfService, MatShelfService>();
 builder.Services.AddSingleton<IMatStockMainService, MatStockMainService>();
 builder.Services.AddSingleton<IMatStockInService, MatStockInService>();
+builder.Services.AddSingleton<IMatStockOutService, MatStockOutService>();
+
 
 
 

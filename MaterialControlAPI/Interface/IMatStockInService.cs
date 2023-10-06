@@ -4,7 +4,7 @@ namespace MaterialControlAPI.Interface
 {
     public interface IMatStockInService
     {
-        IEnumerable<MatStockInModel> GetAll();
+        IEnumerable<MatStockInModel> GetAll();                
         bool AddMatStockIn(MatStockInModel matStockInModel);
         MatStockInModel GetMatStockInById(int Id);
         bool EditMatStockIn(MatStockInModel matStockInModel);

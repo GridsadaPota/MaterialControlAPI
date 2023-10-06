@@ -9,5 +9,6 @@ namespace MaterialControlAPI.Interface
         MatStockMainModel GetMatStockMainByCode(string code);
         bool EditMatStockMain(MatStockMainModel matStockMainModel);
         bool DeleteMatStockMain(string code);
+        bool UpdateStockMainQty(int Material_Id, decimal Qty);
     }
 }

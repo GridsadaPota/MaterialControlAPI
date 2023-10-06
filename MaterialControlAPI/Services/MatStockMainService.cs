@@ -159,5 +159,25 @@ namespace MaterialControlAPI.Services
                 throw;
             }
         }
+
+        public bool UpdateStockMainQty(int Material_Id, decimal Qty)
+        {
+            try
+            {
+                SqlConnection conn = new SqlConnection(_connectionString);
+                string sql = "update Material_StockMain set Stock_Qty = Stock_Qty + "+Qty+" where Material_Id = "+Material_Id+"" ;
+
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.CommandType = CommandType.Text;
+                cmd.ExecuteNonQuery();
+                conn.Close();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }
